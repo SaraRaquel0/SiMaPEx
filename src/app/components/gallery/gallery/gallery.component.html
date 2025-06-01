@@ -1,0 +1,14 @@
+<div class="p-4">
+  <app-category-filter [categories]="categories"
+                       [selectedCategory]="selectedCategory"
+                       (categorySelected)="selectCategory($event)">
+  </app-category-filter>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <a *ngFor="let product of filteredProducts" [routerLink]="['/produto', product.id]">
+      <app-product-card [product]="product"></app-product-card>
+    </a>
+  </div>
+</div>
+
+
