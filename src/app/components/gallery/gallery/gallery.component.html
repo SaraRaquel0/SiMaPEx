@@ -1,0 +1,67 @@
+<!--- <div class="bg-gray-50 min-h-screen p-6">
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+    <h1 class="text-2xl font-bold">Galeria de Produtos</h1>
+    <div class="flex gap-2 flex-wrap">
+      <button *ngFor="let category of categories"
+              (click)="selectCategory(category)"
+              class="px-4 py-1.5 rounded-full border font-medium text-sm transition-all"
+              [ngClass]="{
+                'bg-[#1B365D] text-white shadow': selectedCategory === category,
+                'bg-white text-gray-700 hover:bg-gray-100 border-gray-300': selectedCategory !== category
+              }">
+        {{ category === 'Todos' ? 'Todos' : (category | titlecase) }}
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="filteredProducts.length > 0; else noResults" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <a *ngFor="let product of filteredProducts" [routerLink]="['/produto', product.id]">
+      <app-product-card [product]="product"></app-product-card>
+    </a>
+  </div>
+
+  <ng-template #noResults>
+    <div class="text-center text-gray-500 mt-20">
+      <i class="lucide lucide-search-x text-4xl mb-4"></i>
+      <p class="text-lg">Nenhum produto encontrado nessa categoria.</p>
+    </div>
+  </ng-template>
+</div> --->
+
+<div class="bg-gray-50 min-h-screen p-6">
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+    <h1 class="text-2xl font-bold">Galeria de Ações</h1>
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar por título..." class="border px-4 py-2 rounded w-full md:w-1/3 focus:outline-none focus:ring-2 focus:ring-[#1B365D]">
+  </div>
+
+  <div class="flex gap-2 flex-wrap mb-6">
+    <button *ngFor="let category of categories"
+            (click)="selectCategory(category)"
+            class="px-4 py-1.5 rounded-full border font-medium text-sm transition-all"
+            [ngClass]="{
+              'bg-[#1B365D] text-white shadow': selectedCategory === category,
+              'bg-white text-gray-700 hover:bg-gray-100 border-gray-300': selectedCategory !== category
+            }">
+      {{ category === 'Todos' ? 'Todos' : (category | titlecase) }}
+    </button>
+  </div>
+
+  <div *ngIf="filteredProducts.length > 0; else noResults">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  <a *ngFor="let product of filteredProducts" 
+     [routerLink]="['/produto', product.id]" 
+     class="h-full">
+    <app-product-card [product]="product"></app-product-card>
+  </a>
+</div>
+
+  </div>
+
+  <ng-template #noResults>
+    <div class="text-center text-gray-500 mt-20">
+      <i class="lucide lucide-search-x text-4xl mb-4"></i>
+      <p class="text-lg">Nenhum produto encontrado.</p>
+    </div>
+  </ng-template>
+</div>
+

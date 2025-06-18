@@ -1,0 +1,135 @@
+
+<ng-container *ngIf="product">
+  <button routerLink="/galeria" class="flex items-center text-gray-600 hover:text-gray-900 mb-6">
+    <i class="lucide lucide-arrow-left mr-2"></i>
+    Voltar para Galeria
+  </button>
+
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div class="relative">
+      <img [src]="product.image" [alt]="product.title" class="w-full h-72 md:h-96 object-cover" />
+      <span class="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold" [ngClass]="categoryColors[product.category]">
+        {{ product.category }}
+      </span>
+    </div>
+
+    <div class="p-6 space-y-6">
+      <div class="flex flex-col md:flex-row md:justify-between md:items-center">
+        <h1 class="text-3xl font-bold text-gray-900">{{ product.title }}</h1>
+        <div class="flex mt-4 md:mt-0 gap-2">
+          <button class="flex items-center px-4 py-2 bg-[#1B365D] text-white rounded-md hover:bg-[#152a4a]">
+            <i class="lucide lucide-share-2 mr-2"></i>
+            Compartilhar
+          </button>
+          <button class="flex items-center px-4 py-2 border border-[#1B365D] text-[#1B365D] rounded-md hover:bg-gray-50">
+            <i class="lucide lucide-download mr-2"></i>
+            Download
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-gray-600">
+        <div>
+          <i class="lucide lucide-building text-lg mr-1"></i>
+          <div>
+            <span class="text-sm">Departamento</span><br />
+            <span class="font-semibold text-gray-800">{{ product.department }}</span>
+          </div>
+        </div>
+        <div>
+          <i class="lucide lucide-calendar text-lg mr-1"></i>
+          <div>
+            <span class="text-sm">Data</span><br />
+            <span class="font-semibold text-gray-800">{{ product.date }}</span>
+          </div>
+        </div>
+        <div>
+          <i class="lucide lucide-users text-lg mr-1"></i>
+          <div>
+            <span class="text-sm">Participantes</span><br />
+            <span class="font-semibold text-gray-800">{{ product.participants }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-2">Descrição</h2>
+        <p class="text-gray-700 leading-relaxed">{{ product.description }}</p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-2">Coordenação</h2>
+        <div class="flex items-center space-x-4">
+          <div class="w-10 h-10 rounded-full bg-[#1B365D] text-white flex items-center justify-center font-bold">
+            {{ product.coordinator.charAt(0) }}
+          </div>
+          <div>
+            <p class="font-semibold">{{ product.coordinator }}</p>
+            <p class="text-sm text-gray-500">{{ product.department }}</p>
+          </div>
+        </div>
+      </div>
+     
+      <div>
+        <h2 class="text-xl font-semibold mb-2">Links Relacionados</h2>
+        <ul class="space-y-2">
+          <li *ngFor="let link of product.link">
+            <a [href]="link.url" class="flex items-center text-blue-600 hover:underline">
+              <i class="lucide lucide-link mr-2"></i>{{ link.label }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="product.media?.length" class="pt-6 border-t">
+  <h2 class="text-xl font-semibold mb-4">Galeria de Produtos da Ação</h2>
+
+  <div class="flex space-x-4 mb-4 border-b pb-2 text-sm font-medium">
+    <button
+      *ngFor="let tab of tabs"
+      (click)="activeTab = tab"
+      [ngClass]="{
+        'text-[#1B365D] border-b-2 border-[#1B365D]': activeTab === tab,
+        'text-gray-500 hover:text-gray-700': activeTab !== tab
+      }"
+      class="pb-1 transition"
+    >
+      {{ tab }}
+    </button>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <ng-container *ngFor="let item of product.media">
+      <!-- Fotos -->
+      <div *ngIf="activeTab === 'Fotos' && item.type === 'image'">
+        <img [src]="item.url" alt="Foto" class="w-full rounded shadow" />
+      </div>
+
+      <!-- Vídeos -->
+      <div *ngIf="activeTab === 'Vídeos' && item.type === 'video'" class="aspect-video">
+        <iframe [src]="item.url" frameborder="0" allowfullscreen class="w-full h-full rounded shadow"></iframe>
+      </div>
+
+      <!-- Documentos -->
+      <div *ngIf="activeTab === 'Documentos' && item.type === 'pdf'" class="p-4 bg-gray-100 rounded shadow">
+        <a [href]="item.url" target="_blank" class="text-blue-600 hover:underline flex items-center gap-2">
+          <i class="lucide lucide-file-text"></i> Ver Documento
+        </a>
+      </div>
+
+      <!-- Áudios -->
+      <div *ngIf="activeTab === 'Áudio' && item.type === 'audio'" class="p-4 bg-gray-100 rounded shadow">
+        <audio controls [src]="item.url" class="w-full"></audio>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+
+</ng-container>
+
+
+
+
+
